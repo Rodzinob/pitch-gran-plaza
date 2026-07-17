@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitch Deck - La Gran Plaza 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        dark: '#111111',
+                        light: '#ffffff',
+                        sand: '#f5f5f0',
+                        muted: '#888888',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body { 
+            background-color: #f5f5f0; 
+            color: #111111; 
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        /* Slide Engine */
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            transform: translateY(15px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
+        }
+
+        /* Contenedor Principal (Estilo Revista) */
+        .slide-panel {
+            background-color: #ffffff;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Animación Marquee (Texto Deslizante) */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
+            padding: 12px 0;
+            background: #ffffff;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Detalles Editoriales */
+        .editorial-line {
+            width: 1px;
+            height: 100px;
+            background-color: #111;
+            margin: 0 auto;
+        }
+
+        .btn-editorial {
+            display: inline-flex;
+            align-items: center;
+            background-color: #111;
+            color: #fff;
+            padding: 16px 32px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        .btn-editorial:hover {
+            background-color: #333;
+            transform: translateY(-2px);
+        }
+        
+        .number-accent {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-dark selection:text-white">
+
+    <div class="fixed bottom-8 right-8 z-50 flex gap-6 items-center mix-blend-difference text-white">
+        <span class="text-[10px] font-medium tracking-[0.2em]"><span id="currentSlideNum">1</span> — 6</span>
+        <div class="flex gap-2">
+            <button onclick="prevSlide()" class="w-10 h-10 flex items-center justify-center border border-white/30 rounded-full hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-left text-sm"></i></button>
+            <button onclick="nextSlide()" class="w-10 h-10 flex items-center justify-center border border-white/30 rounded-full hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-right text-sm"></i></button>
+        </div>
+    </div>
+
+    <div class="fixed top-8 left-8 right-8 z-40 flex justify-between items-center pointer-events-none mix-blend-difference text-white">
+        <div class="font-serif italic text-xl tracking-tight">La Gran Plaza</div>
+        <div class="text-[9px] font-medium tracking-widest uppercase">Ecosistema Digital 2026</div>
+    </div>
+
+    <div class="slide active" id="slide-1">
+        <div class="slide-panel justify-center items-center p-12">
+            <div class="max-w-5xl w-full flex flex-col md:flex-row gap-12 items-center h-full">
+                <div class="w-full md:w-1/2 flex flex-col justify-center">
+                    <p class="number-accent mb-6 text-muted">Cap. 01 · Evolución</p>
+                    <h1 class="text-6xl md:text-[5.5rem] font-serif leading-[1.1] text-dark mb-8">El pulso de<br><span class="italic">Moda. Sabor.<br>Vida.</span></h1>
+                    <p class="text-base text-gray-600 font-light max-w-sm leading-relaxed mb-8">
+                        Redefiniendo la presencia digital de La Gran Plaza Fashion Mall. Un enfoque minimalista, inmersivo y enfocado en la experiencia del usuario.
+                    </p>
+                </div>
+                <div class="w-full md:w-1/2 h-[70vh] p-4">
+                    <div class="w-full h-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1519999482648-25049ddd37b1?q=80&w=2126&auto=format&fit=crop" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-2">
+        <div class="slide-panel">
+            <div class="marquee-container mt-24">
+                <div class="marquee-content text-dark">
+                    300+ tiendas <span class="mx-6 opacity-30">/</span> 4.6 ★ 36k reseñas <span class="mx-6 opacity-30">/</span> Cinépolis VIP <span class="mx-6 opacity-30">/</span> Valet prioritario <span class="mx-6 opacity-30">/</span> Abierto todos los días <span class="mx-6 opacity-30">/</span>
+                    300+ tiendas <span class="mx-6 opacity-30">/</span> 4.6 ★ 36k reseñas <span class="mx-6 opacity-30">/</span> Cinépolis VIP <span class="mx-6 opacity-30">/</span> Valet prioritario <span class="mx-6 opacity-30">/</span> Abierto todos los días <span class="mx-6 opacity-30">/</span>
+                </div>
+            </div>
+            
+            <div class="flex-grow flex flex-col justify-center items-center p-12 max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-serif text-dark mb-8">Piezas que cuentan <span class="italic">historias.</span></h2>
+                <p class="text-lg text-gray-500 font-light leading-relaxed mb-12">
+                    Físicamente, La Gran Plaza ofrece una experiencia curada. Sin embargo, el entorno digital actual fragmenta este valor con directorios estáticos y una arquitectura visual desactualizada.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full border-t border-gray-200 pt-12 text-left">
+                    <div>
+                        <p class="number-accent mb-3">01</p>
+                        <h3 class="font-serif text-2xl mb-2">Visibilidad</h3>
+                        <p class="text-xs text-gray-500 font-light">De listas en PDF a un buscador predictivo para 300+ locales.</p>
+                    </div>
+                    <div>
+                        <p class="number-accent mb-3">02</p>
+                        <h3 class="font-serif text-2xl mb-2">Ubicación</h3>
+                        <p class="text-xs text-gray-500 font-light">De mapas estáticos a un sistema Blueprint SVG de 3 niveles.</p>
+                    </div>
+                    <div>
+                        <p class="number-accent mb-3">03</p>
+                        <h3 class="font-serif text-2xl mb-2">Retención</h3>
+                        <p class="text-xs text-gray-500 font-light">De navegación lenta a una experiencia fluida (Carga < 1s).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-3">
+        <div class="slide-panel p-12 md:p-24 bg-sand flex flex-col justify-center">
+            <div class="max-w-6xl mx-auto w-full">
+                <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-300 pb-8">
+                    <div>
+                        <p class="number-accent mb-4">Arquitectura de Información</p>
+                        <h2 class="text-4xl md:text-5xl font-serif">Navegación <span class="italic">Intuitiva.</span></h2>
+                    </div>
+                    <p class="text-xs font-medium uppercase tracking-widest text-gray-500 max-w-xs">Ecosistema centrado en el usuario móvil.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-white p-8 border border-gray-200 hover:border-dark transition duration-300 group">
+                        <div class="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center mb-12 group-hover:bg-dark group-hover:text-white transition">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl mb-2">Directorio</h3>
+                        <p class="text-xs text-gray-500 font-light">300+ tiendas por categoría e indexación en tiempo real.</p>
+                    </div>
+                    <div class="bg-white p-8 border border-gray-200 hover:border-dark transition duration-300 group">
+                        <div class="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center mb-12 group-hover:bg-dark group-hover:text-white transition">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl mb-2">Blueprint</h3>
+                        <p class="text-xs text-gray-500 font-light">Mapa interactivo con wayfinding en 3 niveles.</p>
+                    </div>
+                    <div class="bg-white p-8 border border-gray-200 hover:border-dark transition duration-300 group">
+                        <div class="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center mb-12 group-hover:bg-dark group-hover:text-white transition">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl mb-2">Cartelera</h3>
+                        <p class="text-xs text-gray-500 font-light">Pasarelas, estrenos de Cinépolis y música en vivo.</p>
+                    </div>
+                    <div class="bg-white p-8 border border-gray-200 hover:border-dark transition duration-300 group">
+                        <div class="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center mb-12 group-hover:bg-dark group-hover:text-white transition">
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                        </div>
+                        <h3 class="font-serif text-2xl mb-2">Promociones</h3>
+                        <p class="text-xs text-gray-500 font-light">-50%, 2x1 y Happy Hours destacados dinámicamente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-4">
+        <div class="slide-panel flex flex-col md:flex-row">
+            <div class="w-full md:w-1/2 p-12 md:p-24 flex flex-col justify-center border-r border-gray-100">
+                <p class="number-accent mb-6 text-muted">Servicio Premium</p>
+                <h2 class="text-4xl md:text-5xl font-serif mb-6">Tu visita, <span class="italic">a la medida.</span></h2>
+                <p class="text-base text-gray-500 font-light leading-relaxed mb-10">
+                    Personal shopper, reservaciones en restaurantes de The Terrace, valet parking prioritario y accesos privados. Nuestro equipo diseña la experiencia antes de que el cliente llegue.
+                </p>
+                <ul class="space-y-4 text-sm text-dark font-medium border-l border-dark pl-6">
+                    <li>Atención personalizada (Concierge).</li>
+                    <li>Filtros y rutas adaptadas (Accesibilidad).</li>
+                    <li>Soporte y seguimiento.</li>
+                </ul>
+            </div>
+            <div class="w-full md:w-1/2 bg-dark p-12 md:p-24 flex flex-col justify-center text-white">
+                <h2 class="text-3xl font-serif italic mb-10 border-b border-white/20 pb-6">Casas que habitan la Plaza.</h2>
+                <div class="grid grid-cols-3 gap-8 items-center opacity-70">
+                    <i class="fa-brands fa-apple text-4xl"></i>
+                    <i class="fa-brands fa-aws text-4xl"></i>
+                    <i class="fa-brands fa-dhl text-4xl"></i>
+                    <i class="fa-brands fa-cc-visa text-4xl"></i>
+                    <i class="fa-brands fa-xbox text-4xl"></i>
+                    <span class="font-serif italic text-lg">+300 más</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-5">
+        <div class="slide-panel justify-center items-center p-12">
+            <div class="max-w-4xl w-full text-center">
+                <i class="fa-solid fa-code text-3xl mb-8 text-gray-300"></i>
+                <h2 class="text-4xl md:text-5xl font-serif text-dark mb-6">Tecnología & <span class="italic">Performance.</span></h2>
+                <p class="text-lg text-gray-500 font-light leading-relaxed mb-16 max-w-2xl mx-auto">
+                    Detrás de un diseño pulcro existe una infraestructura robusta. Para un fashion mall con el volumen de La Gran Plaza, la eficiencia lo es todo.
+                </p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                    <div class="border-t border-gray-200 pt-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="w-2 h-2 bg-dark rounded-full"></span>
+                            <h3 class="font-serif text-xl">Automatización Python</h3>
+                        </div>
+                        <p class="text-sm text-gray-500 font-light">Scripts desarrollados a medida para comprimir, catalogar y organizar los activos digitales (logos, fotos) de más de 300 marcas sin intervención manual.</p>
+                    </div>
+                    <div class="border-t border-gray-200 pt-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <span class="w-2 h-2 bg-dark rounded-full"></span>
+                            <h3 class="font-serif text-xl">Velocidad y WPO</h3>
+                        </div>
+                        <p class="text-sm text-gray-500 font-light">Una arquitectura ligera garantiza tiempos de carga casi instantáneos, reteniendo al usuario y mejorando drásticamente el posicionamiento orgánico.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide-6">
+        <div class="slide-panel justify-center items-center p-12 bg-sand">
+            <div class="max-w-3xl w-full text-center">
+                <div class="editorial-line mb-10"></div>
+                
+                <p class="number-accent mb-4">Prototipo 2026</p>
+                <h2 class="text-5xl md:text-7xl font-serif text-dark mb-8 leading-tight">Explora la<br><span class="italic">Experiencia.</span></h2>
+                <p class="text-base text-gray-500 font-light mb-12">
+                    Navega por la propuesta interactiva con el diseño funcional completo, desde el directorio hasta el mapa.
+                </p>
+                
+                <a href="https://propuesta-gran-plaza.lovable.app/" target="_blank" class="btn-editorial">
+                    Abrir Plataforma en Vivo <i class="fa-solid fa-arrow-right ml-3"></i>
+                </a>
+
+                <div class="mt-20 pt-10 border-t border-gray-200 flex justify-between items-center text-left opacity-60">
+                    <div>
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-dark">Diseñador web</p>
+                        <p class="text-xs text-gray-500 mt-1">Rodrigo Olmedo</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="text-[9px] font-bold uppercase tracking-widest text-dark">Locación</p>
+                        <p class="text-xs text-gray-500 mt-1">Zapopan, Jalisco</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 6;
+
+        function updateSlides() {
+            for(let i = 1; i <= totalSlides; i++) {
+                const slide = document.getElementById(`slide-${i}`);
+                if(i === currentSlide) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            }
+            document.getElementById('currentSlideNum').innerText = currentSlide;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlides();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlides();
+            }
+        }
+
+        // Navegación por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+</body>
+</html>

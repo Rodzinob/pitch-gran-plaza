@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Pitch Deck - La Gran Plaza 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,6 +38,7 @@
             padding: 0;
             height: 100vh;
             width: 100vw;
+            -webkit-font-smoothing: antialiased;
         }
 
         /* Slide Engine */
@@ -49,8 +50,12 @@
             justify-content: center;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
             transform: translateY(15px);
+            padding: 1rem;
+        }
+        @media (min-width: 768px) {
+            .slide { padding: 2rem; }
         }
 
         .slide.active {
@@ -59,15 +64,27 @@
             transform: translateY(0);
         }
 
-        /* Contenedor Principal (Estilo Revista) */
+        /* Contenedor Principal (Estilo Revista) con Scroll Móvil */
         .slide-panel {
             background-color: #ffffff;
             width: 100%;
-            height: 100vh;
+            height: 100%;
+            max-height: 100vh;
             display: flex;
             flex-direction: column;
             position: relative;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            overflow-y: auto; /* Permite scroll en móvil si el contenido es largo */
+            overflow-x: hidden;
         }
+        @media (min-width: 768px) {
+            .slide-panel { border-radius: 24px; overflow-y: hidden; }
+        }
+
+        /* Ocultar barra de scroll para estética limpia */
+        .slide-panel::-webkit-scrollbar { display: none; }
+        .slide-panel { -ms-overflow-style: none; scrollbar-width: none; }
 
         /* Animación Marquee (Texto Deslizante) */
         .marquee-container {
@@ -76,16 +93,20 @@
             width: 100%;
             border-top: 1px solid #eaeaea;
             border-bottom: 1px solid #eaeaea;
-            padding: 12px 0;
+            padding: 10px 0;
             background: #ffffff;
+            flex-shrink: 0;
         }
         .marquee-content {
             display: inline-block;
             animation: marquee 25s linear infinite;
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
             font-weight: 500;
+        }
+        @media (min-width: 768px) {
+            .marquee-content { font-size: 11px; }
         }
         @keyframes marquee {
             0% { transform: translateX(0); }
@@ -95,23 +116,28 @@
         /* Detalles Editoriales */
         .editorial-line {
             width: 1px;
-            height: 100px;
+            height: 60px;
             background-color: #111;
             margin: 0 auto;
         }
+        @media (min-width: 768px) { .editorial-line { height: 100px; } }
 
         .btn-editorial {
             display: inline-flex;
             align-items: center;
             background-color: #111;
             color: #fff;
-            padding: 16px 32px;
+            padding: 14px 24px;
             border-radius: 9999px;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 500;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: all 0.3s ease;
+            text-align: center;
+        }
+        @media (min-width: 768px) {
+            .btn-editorial { padding: 16px 32px; font-size: 12px; }
         }
         .btn-editorial:hover {
             background-color: #333;
@@ -120,40 +146,41 @@
         
         .number-accent {
             font-family: 'Montserrat', sans-serif;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
             letter-spacing: 2px;
             text-transform: uppercase;
         }
+        @media (min-width: 768px) { .number-accent { font-size: 10px; } }
     </style>
 </head>
-<body class="antialiased selection:bg-dark selection:text-white">
+<body class="selection:bg-dark selection:text-white">
 
-    <div class="fixed bottom-8 right-8 z-50 flex gap-6 items-center mix-blend-difference text-white">
-        <span class="text-[10px] font-medium tracking-[0.2em]"><span id="currentSlideNum">1</span> — 6</span>
+    <div class="fixed bottom-4 right-4 md:bottom-8 md:right-8 z-50 flex gap-4 md:gap-6 items-center mix-blend-difference text-white">
+        <span class="text-[9px] md:text-[10px] font-medium tracking-[0.2em] hidden sm:inline-block"><span id="currentSlideNum">1</span> — 6</span>
         <div class="flex gap-2">
-            <button onclick="prevSlide()" class="w-10 h-10 flex items-center justify-center border border-white/30 rounded-full hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-left text-sm"></i></button>
-            <button onclick="nextSlide()" class="w-10 h-10 flex items-center justify-center border border-white/30 rounded-full hover:bg-white hover:text-black transition"><i class="fa-solid fa-arrow-right text-sm"></i></button>
+            <button onclick="prevSlide()" class="w-10 h-10 md:w-10 md:h-10 flex items-center justify-center border border-white/30 rounded-full hover:bg-white hover:text-black transition active:scale-95"><i class="fa-solid fa-arrow-left text-xs md:text-sm"></i></button>
+            <button onclick="nextSlide()" class="w-10 h-10 md:w-10 md:h-10 flex items-center justify-center border border-white/30 rounded-full hover:bg-white hover:text-black transition active:scale-95"><i class="fa-solid fa-arrow-right text-xs md:text-sm"></i></button>
         </div>
     </div>
 
-    <div class="fixed top-8 left-8 right-8 z-40 flex justify-between items-center pointer-events-none mix-blend-difference text-white">
-        <div class="font-serif italic text-xl tracking-tight">La Gran Plaza</div>
-        <div class="text-[9px] font-medium tracking-widest uppercase">Ecosistema Digital 2026</div>
+    <div class="fixed top-4 left-4 md:top-8 md:left-8 right-8 z-40 flex justify-between items-center pointer-events-none mix-blend-difference text-white">
+        <div class="font-serif italic text-lg md:text-xl tracking-tight">La Gran Plaza</div>
+        <div class="text-[8px] md:text-[9px] font-medium tracking-widest uppercase hidden sm:block">Ecosistema Digital 2026</div>
     </div>
 
     <div class="slide active" id="slide-1">
-        <div class="slide-panel justify-center items-center p-12">
-            <div class="max-w-5xl w-full flex flex-col md:flex-row gap-12 items-center h-full">
-                <div class="w-full md:w-1/2 flex flex-col justify-center">
-                    <p class="number-accent mb-6 text-muted">Cap. 01 · Evolución</p>
-                    <h1 class="text-6xl md:text-[5.5rem] font-serif leading-[1.1] text-dark mb-8">El pulso de<br><span class="italic">Moda. Sabor.<br>Vida.</span></h1>
-                    <p class="text-base text-gray-600 font-light max-w-sm leading-relaxed mb-8">
-                        Redefiniendo la presencia digital de La Gran Plaza Fashion Mall. Un enfoque minimalista, inmersivo y enfocado en la experiencia del usuario.
+        <div class="slide-panel justify-center items-center p-6 md:p-12 pt-16 md:pt-12">
+            <div class="max-w-5xl w-full flex flex-col md:flex-row gap-8 md:gap-12 items-center h-full">
+                <div class="w-full md:w-1/2 flex flex-col justify-center mt-4 md:mt-0">
+                    <p class="number-accent mb-4 md:mb-6 text-muted">Cap. 01 · Evolución</p>
+                    <h1 class="text-5xl sm:text-6xl md:text-[5.5rem] font-serif leading-[1.1] text-dark mb-4 md:mb-8">El pulso de<br><span class="italic">Moda. Sabor.<br>Vida.</span></h1>
+                    <p class="text-sm md:text-base text-gray-600 font-light max-w-sm leading-relaxed mb-6 md:mb-8">
+                        Redefiniendo la presencia digital de Zapopan. Un enfoque minimalista, inmersivo y enfocado en la experiencia del usuario.
                     </p>
                 </div>
-                <div class="w-full md:w-1/2 h-[70vh] p-4">
-                    <div class="w-full h-full overflow-hidden">
+                <div class="w-full md:w-1/2 h-[40vh] md:h-[70vh] p-0 md:p-4 pb-12 md:pb-4">
+                    <div class="w-full h-full overflow-hidden rounded-xl md:rounded-none">
                         <img src="https://images.unsplash.com/photo-1519999482648-25049ddd37b1?q=80&w=2126&auto=format&fit=crop" class="w-full h-full object-cover grayscale hover:grayscale-0 transition duration-1000">
                     </div>
                 </div>
@@ -163,34 +190,34 @@
 
     <div class="slide" id="slide-2">
         <div class="slide-panel">
-            <div class="marquee-container mt-24">
+            <div class="marquee-container mt-16 md:mt-24">
                 <div class="marquee-content text-dark">
-                    300+ tiendas <span class="mx-6 opacity-30">/</span> 4.6 ★ 36k reseñas <span class="mx-6 opacity-30">/</span> Cinépolis VIP <span class="mx-6 opacity-30">/</span> Valet prioritario <span class="mx-6 opacity-30">/</span> Abierto todos los días <span class="mx-6 opacity-30">/</span>
-                    300+ tiendas <span class="mx-6 opacity-30">/</span> 4.6 ★ 36k reseñas <span class="mx-6 opacity-30">/</span> Cinépolis VIP <span class="mx-6 opacity-30">/</span> Valet prioritario <span class="mx-6 opacity-30">/</span> Abierto todos los días <span class="mx-6 opacity-30">/</span>
+                    300+ tiendas <span class="mx-4 md:mx-6 opacity-30">/</span> 4.6 ★ 36k reseñas <span class="mx-4 md:mx-6 opacity-30">/</span> Cinépolis VIP <span class="mx-4 md:mx-6 opacity-30">/</span> Valet prioritario <span class="mx-4 md:mx-6 opacity-30">/</span> Abierto todos los días <span class="mx-4 md:mx-6 opacity-30">/</span>
+                    300+ tiendas <span class="mx-4 md:mx-6 opacity-30">/</span> 4.6 ★ 36k reseñas <span class="mx-4 md:mx-6 opacity-30">/</span> Cinépolis VIP <span class="mx-4 md:mx-6 opacity-30">/</span> Valet prioritario <span class="mx-4 md:mx-6 opacity-30">/</span> Abierto todos los días <span class="mx-4 md:mx-6 opacity-30">/</span>
                 </div>
             </div>
             
-            <div class="flex-grow flex flex-col justify-center items-center p-12 max-w-4xl mx-auto text-center">
-                <h2 class="text-4xl md:text-5xl font-serif text-dark mb-8">Piezas que cuentan <span class="italic">historias.</span></h2>
-                <p class="text-lg text-gray-500 font-light leading-relaxed mb-12">
+            <div class="flex-grow flex flex-col justify-center items-center p-6 md:p-12 max-w-4xl mx-auto text-center pb-20 md:pb-12">
+                <h2 class="text-3xl sm:text-4xl md:text-5xl font-serif text-dark mb-6 md:mb-8 mt-4 md:mt-0">Piezas que cuentan <span class="italic">historias.</span></h2>
+                <p class="text-sm md:text-lg text-gray-500 font-light leading-relaxed mb-10 md:mb-12">
                     Físicamente, La Gran Plaza ofrece una experiencia curada. Sin embargo, el entorno digital actual fragmenta este valor con directorios estáticos y una arquitectura visual desactualizada.
                 </p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full border-t border-gray-200 pt-12 text-left">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8 w-full border-t border-gray-200 pt-8 md:pt-12 text-left">
                     <div>
-                        <p class="number-accent mb-3">01</p>
-                        <h3 class="font-serif text-2xl mb-2">Visibilidad</h3>
+                        <p class="number-accent mb-2 md:mb-3">01</p>
+                        <h3 class="font-serif text-xl md:text-2xl mb-1 md:mb-2">Visibilidad</h3>
                         <p class="text-xs text-gray-500 font-light">De listas en PDF a un buscador predictivo para 300+ locales.</p>
                     </div>
                     <div>
-                        <p class="number-accent mb-3">02</p>
-                        <h3 class="font-serif text-2xl mb-2">Ubicación</h3>
+                        <p class="number-accent mb-2 md:mb-3">02</p>
+                        <h3 class="font-serif text-xl md:text-2xl mb-1 md:mb-2">Ubicación</h3>
                         <p class="text-xs text-gray-500 font-light">De mapas estáticos a un sistema Blueprint SVG de 3 niveles.</p>
                     </div>
-                    <div>
-                        <p class="number-accent mb-3">03</p>
-                        <h3 class="font-serif text-2xl mb-2">Retención</h3>
-                        <p class="text-xs text-gray-500 font-light">De navegación lenta a una experiencia fluida (Carga < 1s).</p>
+                    <div class="sm:col-span-2 md:col-span-1">
+                        <p class="number-accent mb-2 md:mb-3">03</p>
+                        <h3 class="font-serif text-xl md:text-2xl mb-1 md:mb-2">Retención</h3>
+                        <p class="text-xs text-gray-500 font-light">De navegación lenta a una experiencia fluida (Carga &lt; 1s).</p>
                     </div>
                 </div>
             </div>
@@ -198,43 +225,43 @@
     </div>
 
     <div class="slide" id="slide-3">
-        <div class="slide-panel p-12 md:p-24 bg-sand flex flex-col justify-center">
-            <div class="max-w-6xl mx-auto w-full">
-                <div class="flex flex-col md:flex-row justify-between items-end mb-16 border-b border-gray-300 pb-8">
-                    <div>
-                        <p class="number-accent mb-4">Arquitectura de Información</p>
-                        <h2 class="text-4xl md:text-5xl font-serif">Navegación <span class="italic">Intuitiva.</span></h2>
+        <div class="slide-panel p-6 md:p-12 lg:p-24 bg-sand flex flex-col justify-center pb-20 md:pb-24">
+            <div class="max-w-6xl mx-auto w-full mt-10 md:mt-0">
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-10 md:mb-16 border-b border-gray-300 pb-6 md:pb-8">
+                    <div class="mb-4 md:mb-0">
+                        <p class="number-accent mb-2 md:mb-4">Arquitectura de Información</p>
+                        <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif">Navegación <span class="italic">Intuitiva.</span></h2>
                     </div>
-                    <p class="text-xs font-medium uppercase tracking-widest text-gray-500 max-w-xs">Ecosistema centrado en el usuario móvil.</p>
+                    <p class="text-[10px] md:text-xs font-medium uppercase tracking-widest text-gray-500 max-w-xs hidden sm:block text-right md:text-left">Ecosistema centrado en el usuario móvil.</p>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                    <div class="bg-white p-8 border border-gray-200 hover:border-dark transition duration-300 group">
-                        <div class="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center mb-12 group-hover:bg-dark group-hover:text-white transition">
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-dark transition duration-300 group rounded-xl md:rounded-none">
+                        <div class="w-8 h-8 md:w-10 md:h-10 border border-gray-200 rounded-full flex items-center justify-center mb-6 md:mb-12 group-hover:bg-dark group-hover:text-white transition">
+                            <i class="fa-solid fa-arrow-right text-[10px] md:text-xs"></i>
                         </div>
-                        <h3 class="font-serif text-2xl mb-2">Directorio</h3>
+                        <h3 class="font-serif text-xl md:text-2xl mb-2">Directorio</h3>
                         <p class="text-xs text-gray-500 font-light">300+ tiendas por categoría e indexación en tiempo real.</p>
                     </div>
-                    <div class="bg-white p-8 border border-gray-200 hover:border-dark transition duration-300 group">
-                        <div class="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center mb-12 group-hover:bg-dark group-hover:text-white transition">
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                    <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-dark transition duration-300 group rounded-xl md:rounded-none">
+                        <div class="w-8 h-8 md:w-10 md:h-10 border border-gray-200 rounded-full flex items-center justify-center mb-6 md:mb-12 group-hover:bg-dark group-hover:text-white transition">
+                            <i class="fa-solid fa-arrow-right text-[10px] md:text-xs"></i>
                         </div>
-                        <h3 class="font-serif text-2xl mb-2">Blueprint</h3>
+                        <h3 class="font-serif text-xl md:text-2xl mb-2">Blueprint</h3>
                         <p class="text-xs text-gray-500 font-light">Mapa interactivo con wayfinding en 3 niveles.</p>
                     </div>
-                    <div class="bg-white p-8 border border-gray-200 hover:border-dark transition duration-300 group">
-                        <div class="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center mb-12 group-hover:bg-dark group-hover:text-white transition">
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                    <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-dark transition duration-300 group rounded-xl md:rounded-none">
+                        <div class="w-8 h-8 md:w-10 md:h-10 border border-gray-200 rounded-full flex items-center justify-center mb-6 md:mb-12 group-hover:bg-dark group-hover:text-white transition">
+                            <i class="fa-solid fa-arrow-right text-[10px] md:text-xs"></i>
                         </div>
-                        <h3 class="font-serif text-2xl mb-2">Cartelera</h3>
+                        <h3 class="font-serif text-xl md:text-2xl mb-2">Cartelera</h3>
                         <p class="text-xs text-gray-500 font-light">Pasarelas, estrenos de Cinépolis y música en vivo.</p>
                     </div>
-                    <div class="bg-white p-8 border border-gray-200 hover:border-dark transition duration-300 group">
-                        <div class="w-10 h-10 border border-gray-200 rounded-full flex items-center justify-center mb-12 group-hover:bg-dark group-hover:text-white transition">
-                            <i class="fa-solid fa-arrow-right text-xs"></i>
+                    <div class="bg-white p-6 md:p-8 border border-gray-200 hover:border-dark transition duration-300 group rounded-xl md:rounded-none">
+                        <div class="w-8 h-8 md:w-10 md:h-10 border border-gray-200 rounded-full flex items-center justify-center mb-6 md:mb-12 group-hover:bg-dark group-hover:text-white transition">
+                            <i class="fa-solid fa-arrow-right text-[10px] md:text-xs"></i>
                         </div>
-                        <h3 class="font-serif text-2xl mb-2">Promociones</h3>
+                        <h3 class="font-serif text-xl md:text-2xl mb-2">Promociones</h3>
                         <p class="text-xs text-gray-500 font-light">-50%, 2x1 y Happy Hours destacados dinámicamente.</p>
                     </div>
                 </div>
@@ -243,56 +270,54 @@
     </div>
 
     <div class="slide" id="slide-4">
-        <div class="slide-panel flex flex-col md:flex-row">
-            <div class="w-full md:w-1/2 p-12 md:p-24 flex flex-col justify-center border-r border-gray-100">
-                <p class="number-accent mb-6 text-muted">Servicio Premium</p>
-                <h2 class="text-4xl md:text-5xl font-serif mb-6">Tu visita, <span class="italic">a la medida.</span></h2>
-                <p class="text-base text-gray-500 font-light leading-relaxed mb-10">
-                    Personal shopper, reservaciones en restaurantes de The Terrace, valet parking prioritario y accesos privados. Nuestro equipo diseña la experiencia antes de que el cliente llegue.
-                </p>
-                <ul class="space-y-4 text-sm text-dark font-medium border-l border-dark pl-6">
-                    <li>Atención personalizada (Concierge).</li>
-                    <li>Filtros y rutas adaptadas (Accesibilidad).</li>
-                    <li>Soporte y seguimiento.</li>
-                </ul>
-            </div>
-            <div class="w-full md:w-1/2 bg-dark p-12 md:p-24 flex flex-col justify-center text-white">
-                <h2 class="text-3xl font-serif italic mb-10 border-b border-white/20 pb-6">Casas que habitan la Plaza.</h2>
-                <div class="grid grid-cols-3 gap-8 items-center opacity-70">
-                    <i class="fa-brands fa-apple text-4xl"></i>
-                    <i class="fa-brands fa-aws text-4xl"></i>
-                    <i class="fa-brands fa-dhl text-4xl"></i>
-                    <i class="fa-brands fa-cc-visa text-4xl"></i>
-                    <i class="fa-brands fa-xbox text-4xl"></i>
-                    <span class="font-serif italic text-lg">+300 más</span>
+        <div class="slide-panel p-6 md:p-12 lg:p-16 max-w-5xl w-full text-center flex flex-col justify-center pb-20 mx-auto">
+            <p class="text-gold text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase mb-2 md:mb-4 mt-8 md:mt-0">Evolución de Marca</p>
+            <h2 class="text-3xl md:text-5xl font-serif mb-4 md:mb-6 text-dark">Identidad y <span class="italic">Concierge.</span></h2>
+            <p class="text-sm md:text-base text-gray-500 font-light leading-relaxed mb-10 md:mb-12 max-w-2xl mx-auto">
+                Para mantener la elegancia de la interfaz blanca y minimalista, la mascota "Espín" se adapta como un icono funcional de asistencia y no como una botarga disruptiva.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-8 md:gap-16">
+                <div class="text-center sm:text-left max-w-xs order-2 sm:order-1 flex flex-col items-center sm:items-start">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-sand flex items-center justify-center mb-3 md:mb-4 text-gold"><i class="fa-solid fa-robot"></i></div>
+                    <h3 class="font-serif text-lg md:text-xl mb-1 md:mb-2">Asistente Discreto</h3>
+                    <p class="text-[11px] md:text-xs text-gray-500">Un icono sutil en la interfaz que asiste con el mapa y búsquedas.</p>
+                </div>
+                <div class="w-40 h-40 md:w-48 md:h-48 shrink-0 rounded-full border border-gray-100 flex items-center justify-center bg-surface shadow-sm order-1 sm:order-2">
+                    <img src="http://googleusercontent.com/image_collection/image_retrieval/10879735872326401834" alt="Icono minimalista" class="w-20 md:w-24 opacity-80 mix-blend-multiply">
+                </div>
+                <div class="text-center sm:text-left max-w-xs order-3 flex flex-col items-center sm:items-start">
+                    <div class="w-10 h-10 md:w-12 md:h-12 rounded-full bg-sand flex items-center justify-center mb-3 md:mb-4 text-gold"><i class="fa-solid fa-pen-nib"></i></div>
+                    <h3 class="font-serif text-lg md:text-xl mb-1 md:mb-2">Diseño Limpio</h3>
+                    <p class="text-[11px] md:text-xs text-gray-500">Trazos finos en grises y dorados para integrarse al Light Theme.</p>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="slide" id="slide-5">
-        <div class="slide-panel justify-center items-center p-12">
-            <div class="max-w-4xl w-full text-center">
-                <i class="fa-solid fa-code text-3xl mb-8 text-gray-300"></i>
-                <h2 class="text-4xl md:text-5xl font-serif text-dark mb-6">Tecnología & <span class="italic">Performance.</span></h2>
-                <p class="text-lg text-gray-500 font-light leading-relaxed mb-16 max-w-2xl mx-auto">
-                    Detrás de un diseño pulcro existe una infraestructura robusta. Para un fashion mall con el volumen de La Gran Plaza, la eficiencia lo es todo.
+        <div class="slide-panel justify-center items-center p-6 md:p-12 pb-20">
+            <div class="max-w-4xl w-full text-center mt-10 md:mt-0">
+                <i class="fa-solid fa-code text-2xl md:text-3xl mb-6 md:mb-8 text-gray-300"></i>
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif text-dark mb-4 md:mb-6">Tecnología & <span class="italic">Performance.</span></h2>
+                <p class="text-sm md:text-lg text-gray-500 font-light leading-relaxed mb-10 md:mb-16 max-w-2xl mx-auto">
+                    Detrás de un diseño pulcro existe una infraestructura robusta. Para un mall con el volumen de La Gran Plaza, la eficiencia lo es todo.
                 </p>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-left">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 text-left">
                     <div class="border-t border-gray-200 pt-6">
-                        <div class="flex items-center gap-3 mb-4">
+                        <div class="flex items-center gap-3 mb-3 md:mb-4">
                             <span class="w-2 h-2 bg-dark rounded-full"></span>
-                            <h3 class="font-serif text-xl">Automatización Python</h3>
+                            <h3 class="font-serif text-lg md:text-xl">Automatización Python</h3>
                         </div>
-                        <p class="text-sm text-gray-500 font-light">Scripts desarrollados a medida para comprimir, catalogar y organizar los activos digitales (logos, fotos) de más de 300 marcas sin intervención manual.</p>
+                        <p class="text-xs md:text-sm text-gray-500 font-light">Scripts desarrollados a medida para comprimir, catalogar y organizar los activos digitales (logos, fotos) de más de 300 marcas sin intervención manual.</p>
                     </div>
                     <div class="border-t border-gray-200 pt-6">
-                        <div class="flex items-center gap-3 mb-4">
+                        <div class="flex items-center gap-3 mb-3 md:mb-4">
                             <span class="w-2 h-2 bg-dark rounded-full"></span>
-                            <h3 class="font-serif text-xl">Velocidad y WPO</h3>
+                            <h3 class="font-serif text-lg md:text-xl">Velocidad y WPO</h3>
                         </div>
-                        <p class="text-sm text-gray-500 font-light">Una arquitectura ligera garantiza tiempos de carga casi instantáneos, reteniendo al usuario y mejorando drásticamente el posicionamiento orgánico.</p>
+                        <p class="text-xs md:text-sm text-gray-500 font-light">Una arquitectura ligera garantiza tiempos de carga casi instantáneos, reteniendo al usuario móvil y mejorando drásticamente el posicionamiento SEO.</p>
                     </div>
                 </div>
             </div>
@@ -300,28 +325,28 @@
     </div>
 
     <div class="slide" id="slide-6">
-        <div class="slide-panel justify-center items-center p-12 bg-sand">
-            <div class="max-w-3xl w-full text-center">
-                <div class="editorial-line mb-10"></div>
+        <div class="slide-panel justify-center items-center p-6 md:p-12 bg-sand pb-20">
+            <div class="max-w-3xl w-full text-center mt-10 md:mt-0">
+                <div class="editorial-line mb-8 md:mb-10"></div>
                 
-                <p class="number-accent mb-4">Prototipo 2026</p>
-                <h2 class="text-5xl md:text-7xl font-serif text-dark mb-8 leading-tight">Explora la<br><span class="italic">Experiencia.</span></h2>
-                <p class="text-base text-gray-500 font-light mb-12">
+                <p class="number-accent mb-3 md:mb-4">Prototipo 2026</p>
+                <h2 class="text-4xl sm:text-5xl md:text-7xl font-serif text-dark mb-6 md:mb-8 leading-tight">Explora la<br><span class="italic">Experiencia.</span></h2>
+                <p class="text-sm md:text-base text-gray-500 font-light mb-10 md:mb-12">
                     Navega por la propuesta interactiva con el diseño funcional completo, desde el directorio hasta el mapa.
                 </p>
                 
-                <a href="https://propuesta-gran-plaza.lovable.app/" target="_blank" class="btn-editorial">
-                    Abrir Plataforma en Vivo <i class="fa-solid fa-arrow-right ml-3"></i>
+                <a href="https://propuesta-gran-plaza.lovable.app/" target="_blank" class="btn-editorial flex-col sm:flex-row justify-center w-full sm:w-auto">
+                    Abrir Plataforma en Vivo <i class="fa-solid fa-arrow-right sm:ml-3 mt-2 sm:mt-0"></i>
                 </a>
 
-                <div class="mt-20 pt-10 border-t border-gray-200 flex justify-between items-center text-left opacity-60">
+                <div class="mt-16 md:mt-20 pt-8 md:pt-10 border-t border-gray-200 flex flex-row justify-between items-center text-left opacity-60">
                     <div>
-                        <p class="text-[9px] font-bold uppercase tracking-widest text-dark">Diseñador web</p>
-                        <p class="text-xs text-gray-500 mt-1">Rodrigo Olmedo</p>
+                        <p class="text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-dark">Consultoría Web</p>
+                        <p class="text-[10px] md:text-xs text-gray-500 mt-1">Rodrigo & Juan</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-[9px] font-bold uppercase tracking-widest text-dark">Locación</p>
-                        <p class="text-xs text-gray-500 mt-1">Zapopan, Jalisco</p>
+                        <p class="text-[8px] md:text-[9px] font-bold uppercase tracking-widest text-dark">Locación</p>
+                        <p class="text-[10px] md:text-xs text-gray-500 mt-1">Zapopan, Jalisco</p>
                     </div>
                 </div>
             </div>
@@ -363,6 +388,25 @@
             if (e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
             if (e.key === 'ArrowLeft') prevSlide();
         });
+        
+        // Touch events simple swipe para móvil
+        let touchstartX = 0;
+        let touchendX = 0;
+        
+        document.addEventListener('touchstart', e => {
+            touchstartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', e => {
+            touchendX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            // Requiere un swipe de al menos 50px para evitar cambios accidentales
+            if (touchendX < touchstartX - 50) nextSlide();
+            if (touchendX > touchstartX + 50) prevSlide();
+        }
     </script>
 </body>
 </html>
